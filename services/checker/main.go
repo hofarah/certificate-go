@@ -19,7 +19,7 @@ func main() {
 	}
 	certificate.PrintCert(cert)
 
-	err = certificate.CheckExpireValidation(cert)
+	err = certificate.CheckTimeValidate(cert)
 	if err != nil {
 		fmt.Println(err)
 		return

@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"time"
 )
 
 func GetCertFromFile(path string) (x509.Certificate, error) {
@@ -72,11 +71,11 @@ func PrintCert(certificate x509.Certificate) {
 		"CRLDistributionPoints:", certificate.CRLDistributionPoints, "\n",
 		"PolicyIdentifiers:", certificate.PolicyIdentifiers)
 }
-func CheckExpireValidation(certificate x509.Certificate) error {
-	if time.Now().Before(certificate.NotBefore) {
+func CheckTimeValidate(certificate x509.Certificate) error {
+	if certificate.NotBefore.IsZero() {
 		return errors.New("expired cert: code 13")
 	}
-	if time.Now().After(certificate.NotAfter) {
+	if certificate.NotAfter.IsZero() {
 		return errors.New("expired cert: code 14")
 	}
 	return nil
